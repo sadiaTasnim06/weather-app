@@ -1,6 +1,7 @@
 import express from "express";
 import pinoHttp from "pino-http";
 import { logger } from "./config/logger";
+import { errorHandler } from "./middleware/error.middleware";
 
 const app = express();
 
@@ -12,5 +13,7 @@ app.get("/health", (_req, res) => {
     status: "ok",
   });
 });
+
+app.use(errorHandler);
 
 export default app;
