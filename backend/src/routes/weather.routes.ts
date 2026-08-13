@@ -3,8 +3,6 @@ import { weatherController } from "../composition";
 
 const router = Router();
 
-router.get("/locations", (req, res) => {
-  return weatherController.searchLocations(req, res);
-});
+router.get("/locations", weatherController.searchLocations);
 
 export const weatherRouter = router;

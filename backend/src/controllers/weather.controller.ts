@@ -9,10 +9,11 @@ export class WeatherController {
     this.weatherService = weatherService;
   }
 
-  async searchLocations(req: Request, res: Response) {
+  searchLocations = async (req: Request, res: Response) => {
     const { q } = searchLocationsSchema.parse(req.query);
+
     const locations = await this.weatherService.searchLocations(q);
 
     return res.json(locations);
-  }
+  };
 }
