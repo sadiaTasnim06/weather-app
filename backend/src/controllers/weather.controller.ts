@@ -1,5 +1,6 @@
 import type { Request, Response } from "express";
 import type { WeatherService } from "../services/weather.service";
+import { searchLocationsSchema } from "../validation/weather.schema";
 
 export class WeatherController {
   private weatherService: WeatherService;
@@ -9,9 +10,8 @@ export class WeatherController {
   }
 
   async searchLocations(req: Request, res: Response) {
-    const query = req.query.q as string;
-
-    const locations = await this.weatherService.searchLocations(query);
+    const { q } = searchLocationsSchema.parse(req.query);
+    const locations = await this.weatherService.searchLocations(q);
 
     return res.json(locations);
   }
