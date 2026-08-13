@@ -2,6 +2,7 @@ import express from "express";
 import pinoHttp from "pino-http";
 import { logger } from "./config/logger";
 import { errorHandler } from "./middleware/error.middleware";
+import { weatherRouter } from "./routes/weather.routes";
 
 const app = express();
 
@@ -13,6 +14,7 @@ app.get("/health", (_req, res) => {
     status: "ok",
   });
 });
+app.use("/api/v1", weatherRouter);
 
 app.use(errorHandler);
 
