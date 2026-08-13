@@ -3,9 +3,11 @@ import pinoHttp from "pino-http";
 import { logger } from "./config/logger";
 import { errorHandler } from "./middleware/error.middleware";
 import { weatherRouter } from "./routes/weather.routes";
+import cors from "cors";
 
 const app = express();
 
+app.use(cors());
 app.use(express.json());
 app.use(pinoHttp({ logger }));
 
