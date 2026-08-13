@@ -1,3 +1,4 @@
+import "dotenv/config";
 import { z } from "zod";
 
 const envSchema = z.object({
@@ -6,16 +7,21 @@ const envSchema = z.object({
     .default("development"),
 
   PORT: z.coerce.number().int().positive().default(3000),
+  CORS_ORIGIN: z.url(),
 });
 
 const result = envSchema.safeParse(process.env);
 
 if (!result.success) {
-  console.error("Invalid environment configuration:", result.error.format());
+  console.error(
+    "Invalid environment configuration:",
+    z.treeifyError(result.error),
+  );
   process.exit(1);
 }
 
 export const env = {
   nodeEnv: result.data.NODE_ENV,
   port: result.data.PORT,
+  corsOrigin: result.data.CORS_ORIGIN,
 };
