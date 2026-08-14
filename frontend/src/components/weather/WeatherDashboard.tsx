@@ -6,7 +6,7 @@ import { Forecast } from "./Forecast";
 
 interface WeatherDashboardProps {
   location: Location;
-  weather: Weather | null;
+  weather?: Weather;
   isLoading: boolean;
 }
 

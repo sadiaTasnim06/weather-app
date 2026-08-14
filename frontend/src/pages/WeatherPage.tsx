@@ -1,47 +1,38 @@
-import { Box, Heading, Stack } from "@chakra-ui/react";
+import { Box, Heading, Stack, Text } from "@chakra-ui/react";
 import { useState } from "react";
-import type { Weather } from "../types/weather";
 import type { Location } from "../types/location";
-import { searchLocations, getWeather } from "../api/weatherApi";
 import { LocationSearch } from "../components/search/LocationSearch";
 import { LocationResults } from "../components/search/LocationResults";
 import { WeatherDashboard } from "../components/weather/WeatherDashboard";
+import { useLocationSearch } from "../hooks/useLocationSearch";
+import { useWeather } from "../hooks/useWeather";
 
 export function WeatherPage() {
   const [query, setQuery] = useState("");
-  const [locations, setLocations] = useState<Location[]>([]);
-  const [weather, setWeather] = useState<Weather | null>(null);
-  const [isLoadingWeather, setIsWeatherLoading] = useState(false);
+  const [submittedQuery, setSubmittedQuery] = useState("");
   const [selectedLocation, setSelectedLocation] = useState<Location | null>(
     null,
   );
-  const [isSearching, setIsSearching] = useState(false);
+  const [hasSearched, setHasSearched] = useState(false);
+  const {
+    data: locations = [],
+    isFetching: isSearching,
+    isError: isSearchError,
+  } = useLocationSearch(submittedQuery);
+  const { data: weather, isPending: isLoadingWeather } = useWeather(
+    selectedLocation?.latitude,
+    selectedLocation?.longitude,
+  );
 
   async function handleSearch() {
-    if (!query.trim()) return;
-
-    setIsSearching(true);
-
-    try {
-      const results = await searchLocations(query);
-      setLocations(results);
-    } finally {
-      setIsSearching(false);
-    }
+    const trimmedQuery = query.trim();
+    if (!trimmedQuery) return;
+    setHasSearched(true);
+    setSubmittedQuery(trimmedQuery);
   }
 
-  async function handleLocationSelect(location: Location) {
+  function handleLocationSelect(location: Location) {
     setSelectedLocation(location);
-    setWeather(null);
-    setIsWeatherLoading(true);
-
-    try {
-      const result = await getWeather(location.latitude, location.longitude);
-
-      setWeather(result);
-    } finally {
-      setIsWeatherLoading(false);
-    }
   }
 
   return (
@@ -60,7 +51,35 @@ export function WeatherPage() {
           locations={locations}
           onSelect={handleLocationSelect}
         />
+        {hasSearched &&
+          !isSearching &&
+          !isSearchError &&
+          locations.length === 0 && (
+            <Box
+              p="6"
+              borderWidth="1px"
+              borderRadius="xl"
+              bg="white"
+              textAlign="center"
+            >
+              <Heading size="md" mb="2">
+                No locations found
+              </Heading>
 
+              <Text color="gray.600">Try searching for a different city.</Text>
+            </Box>
+          )}
+        {hasSearched && isSearchError && (
+          <Box p="6" borderWidth="1px" borderRadius="xl" bg="white">
+            <Heading size="md" mb="2">
+              Search failed
+            </Heading>
+
+            <Text color="gray.600">
+              We couldn't search for that location. Please try again.
+            </Text>
+          </Box>
+        )}
         {selectedLocation && (
           <WeatherDashboard
             location={selectedLocation}

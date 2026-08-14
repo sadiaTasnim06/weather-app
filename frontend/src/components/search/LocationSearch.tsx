@@ -13,18 +13,25 @@ export function LocationSearch({
   onQueryChange,
   onSearch,
 }: LocationSearchProps) {
-  return (
-    <HStack gap="3">
-      <Input
-        value={query}
-        onChange={(event) => onQueryChange(event.target.value)}
-        placeholder="Search for a city"
-        size="lg"
-      />
+  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    onSearch();
+  }
 
-      <Button type="button" onClick={onSearch} loading={isSearching} size="lg">
-        Search
-      </Button>
-    </HStack>
+  return (
+    <form onSubmit={handleSubmit}>
+      <HStack gap="3">
+        <Input
+          value={query}
+          onChange={(event) => onQueryChange(event.target.value)}
+          placeholder="Search for a city"
+          size="lg"
+        />
+
+        <Button type="submit" loading={isSearching} size="lg">
+          Search
+        </Button>
+      </HStack>
+    </form>
   );
 }
