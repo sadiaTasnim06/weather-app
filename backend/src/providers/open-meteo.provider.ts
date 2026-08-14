@@ -2,6 +2,7 @@ import { AppError } from "../errors/AppError";
 import { Weather } from "../types/weather";
 import { Location } from "../types/location";
 import type { WeatherProvider } from "./weather.provider";
+import { env } from "../config/env";
 
 export class OpenMeteoProvider implements WeatherProvider {
   async searchLocations(query: string): Promise<Location[]> {
@@ -13,7 +14,7 @@ export class OpenMeteoProvider implements WeatherProvider {
     });
 
     const response = await fetch(
-      `https://geocoding-api.open-meteo.com/v1/search?${params}`,
+      `${env.weatherGeocodingBaseUrl}/search?${params}`,
     );
 
     if (!response.ok) {
@@ -34,7 +35,7 @@ export class OpenMeteoProvider implements WeatherProvider {
     }));
   }
   async getWeather(latitude: number, longitude: number): Promise<Weather> {
-    const url = new URL("https://api.open-meteo.com/v1/forecast");
+    const url = new URL(`${env.weatherApiBaseUrl}/forecast`);
 
     url.searchParams.set("latitude", latitude.toString());
     url.searchParams.set("longitude", longitude.toString());

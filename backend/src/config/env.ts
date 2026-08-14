@@ -8,6 +8,10 @@ const envSchema = z.object({
 
   PORT: z.coerce.number().int().positive().default(3000),
   CORS_ORIGIN: z.url(),
+  WEATHER_API_BASE_URL: z.url().default("https://api.open-meteo.com/v1"),
+  WEATHER_GEOCODING_BASE_URL: z
+    .url()
+    .default("https://geocoding-api.open-meteo.com/v1"),
 });
 
 const result = envSchema.safeParse(process.env);
@@ -24,4 +28,6 @@ export const env = {
   nodeEnv: result.data.NODE_ENV,
   port: result.data.PORT,
   corsOrigin: result.data.CORS_ORIGIN,
+  weatherApiBaseUrl: result.data.WEATHER_API_BASE_URL,
+  weatherGeocodingBaseUrl: result.data.WEATHER_GEOCODING_BASE_URL,
 };
