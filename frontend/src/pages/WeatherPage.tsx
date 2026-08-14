@@ -36,6 +36,12 @@ export function WeatherPage() {
   function handleLocationSelect(location: Location) {
     setSelectedLocation(location);
   }
+  function handleClearSearch() {
+    setQuery("");
+    setSubmittedQuery("");
+    setSelectedLocation(null);
+    setHasSearched(false);
+  }
 
   return (
     <Box maxW="1200px" mx="auto" px="4" py="8">
@@ -47,6 +53,7 @@ export function WeatherPage() {
           isSearching={isSearching}
           onQueryChange={setQuery}
           onSearch={handleSearch}
+          onClear={handleClearSearch}
         />
 
         {isSearching ? (

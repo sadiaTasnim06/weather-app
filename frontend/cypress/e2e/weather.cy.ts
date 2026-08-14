@@ -70,4 +70,15 @@ describe("Weather App", () => {
       .contains("Paris")
       .should("be.visible");
   });
+  it("clears the search when the clear button is clicked", () => {
+    cy.visit("/");
+
+    cy.get('input[placeholder="Search for a city"]').type("London");
+
+    cy.get('button[aria-label="Clear search"]').click();
+
+    cy.get('input[placeholder="Search for a city"]').should("have.value", "");
+
+    cy.contains("Locations").should("not.exist");
+  });
 });
