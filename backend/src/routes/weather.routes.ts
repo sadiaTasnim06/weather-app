@@ -1,9 +1,11 @@
 import { Router } from "express";
-import { weatherController } from "../composition";
+import { WeatherController } from "../controllers/weather.controller";
 
-const router = Router();
+export function createWeatherRouter(weatherController: WeatherController) {
+  const router = Router();
 
-router.get("/locations", weatherController.searchLocations);
-router.get("/weather", weatherController.getWeather);
+  router.get("/locations", weatherController.searchLocations);
+  router.get("/weather", weatherController.getWeather);
 
-export const weatherRouter = router;
+  return router;
+}
