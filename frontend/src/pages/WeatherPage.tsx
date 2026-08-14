@@ -28,6 +28,7 @@ export function WeatherPage() {
     const trimmedQuery = query.trim();
     if (!trimmedQuery) return;
     setHasSearched(true);
+    setSelectedLocation(null);
     setSubmittedQuery(trimmedQuery);
   }
 
@@ -47,10 +48,16 @@ export function WeatherPage() {
           onSearch={handleSearch}
         />
 
-        <LocationResults
-          locations={locations}
-          onSelect={handleLocationSelect}
-        />
+        {isSearching ? (
+          <Box p="6" borderWidth="1px" borderRadius="xl" textAlign="center">
+            <Text>Searching locations...</Text>
+          </Box>
+        ) : (
+          <LocationResults
+            locations={locations}
+            onSelect={handleLocationSelect}
+          />
+        )}
         {hasSearched &&
           !isSearching &&
           !isSearchError &&
