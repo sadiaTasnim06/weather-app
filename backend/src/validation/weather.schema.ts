@@ -5,6 +5,6 @@ export const searchLocationsSchema = z.object({
 });
 
 export const getWeatherSchema = z.object({
-  latitude: z.coerce.number().finite(),
-  longitude: z.coerce.number().finite(),
+  latitude: z.coerce.number().min(-90).max(90),
+  longitude: z.coerce.number().min(-180).max(180),
 });
