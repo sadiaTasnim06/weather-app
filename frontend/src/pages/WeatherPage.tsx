@@ -19,10 +19,11 @@ export function WeatherPage() {
     isFetching: isSearching,
     isError: isSearchError,
   } = useLocationSearch(submittedQuery);
-  const { data: weather, isPending: isLoadingWeather } = useWeather(
-    selectedLocation?.latitude,
-    selectedLocation?.longitude,
-  );
+  const {
+    data: weather,
+    isPending: isLoadingWeather,
+    isError: isWeatherError,
+  } = useWeather(selectedLocation?.latitude, selectedLocation?.longitude);
 
   async function handleSearch() {
     const trimmedQuery = query.trim();
@@ -87,7 +88,18 @@ export function WeatherPage() {
             </Text>
           </Box>
         )}
-        {selectedLocation && (
+        {selectedLocation && isWeatherError && (
+          <Box p="6" borderWidth="1px" borderRadius="xl" bg="white">
+            <Heading size="md" mb="2">
+              Weather unavailable
+            </Heading>
+
+            <Text color="gray.600">
+              We couldn't load the weather for this location. Please try again.
+            </Text>
+          </Box>
+        )}
+        {selectedLocation && !isWeatherError && (
           <WeatherDashboard
             location={selectedLocation}
             weather={weather}
