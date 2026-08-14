@@ -1,5 +1,6 @@
 import { Box, Button, Heading, Stack, Text } from "@chakra-ui/react";
 import type { Location } from "../../types/location";
+import { TEST_IDS } from "../../constants/testIds";
 
 interface LocationResultsProps {
   locations: Location[];
@@ -21,6 +22,7 @@ export function LocationResults({ locations, onSelect }: LocationResultsProps) {
         <Stack gap="0">
           {locations.map((location) => (
             <Button
+              data-cy={TEST_IDS.locationResult}
               key={`${location.latitude}-${location.longitude}`}
               type="button"
               variant="ghost"
