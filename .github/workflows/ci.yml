@@ -44,7 +44,7 @@ jobs:
 
       - name: Build
         run: npm run build
-    frontend:
+  frontend:
     runs-on: ubuntu-latest
 
     defaults:
