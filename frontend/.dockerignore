@@ -1,0 +1,9 @@
+node_modules
+dist
+.env
+.env.*
+!.env.production
+coverage
+test-results
+cypress/screenshots
+cypress/videos

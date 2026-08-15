@@ -46,5 +46,3 @@ Thumbs.db
 *.sln
 *.sw?
 
-# Test
-cypress/screenshots/
