@@ -33,7 +33,7 @@ export function LocationSearch({
           <Input
             value={query}
             onChange={(event) => onQueryChange(event.target.value)}
-            placeholder="Search for a city..."
+            placeholder="Search for a city"
             size="lg"
             height="14"
             borderRadius="xl"

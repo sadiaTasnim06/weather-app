@@ -23,9 +23,9 @@ lerna-debug.log*
 
 # Test output
 coverage/
-cypress/screenshots/
-cypress/videos/
-cypress/downloads/
+**/cypress/screenshots/
+**/cypress/videos/
+**/cypress/downloads/
 
 # Local files
 *.local
