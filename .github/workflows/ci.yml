@@ -11,6 +11,12 @@ on:
 jobs:
   backend:
     runs-on: ubuntu-latest
+    env:
+      NODE_ENV: test
+      PORT: 3000
+      CORS_ORIGIN: http://localhost
+      WEATHER_API_BASE_URL: https://api.open-meteo.com/v1
+      WEATHER_GEOCODING_BASE_URL: https://geocoding-api.open-meteo.com/v1
 
     defaults:
       run:
