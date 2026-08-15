@@ -1,6 +1,6 @@
-import { Box, Button, Heading, Stack, Text } from "@chakra-ui/react";
-import type { Location } from "../../types/location";
-import { TEST_IDS } from "../../constants/testIds";
+import { Box, Heading, Stack, Text } from '@chakra-ui/react';
+import type { Location } from '../../types/location';
+import { TEST_IDS } from '../../constants/testIds';
 
 interface LocationResultsProps {
   locations: Location[];
@@ -14,34 +14,52 @@ export function LocationResults({ locations, onSelect }: LocationResultsProps) {
 
   return (
     <Box>
-      <Heading size="md" mb="3">
-        Locations
+      <Heading size="sm" mb="3" color="gray.700">
+        Choose a location
       </Heading>
 
-      <Box maxH="240px" overflowY="auto" borderWidth="1px" borderRadius="md">
+      <Box
+        maxH="260px"
+        overflowY="auto"
+        borderWidth="1px"
+        borderColor="gray.200"
+        borderRadius="xl"
+        bg="white"
+        shadow="sm"
+      >
         <Stack gap="0">
           {locations.map((location) => (
-            <Button
-              data-cy={TEST_IDS.locationResult}
+            <Box
               key={`${location.latitude}-${location.longitude}`}
-              type="button"
-              variant="ghost"
-              justifyContent="flex-start"
-              height="auto"
+              as="button"
+              data-cy={TEST_IDS.locationResult}
               width="100%"
-              py="3"
-              px="4"
-              borderRadius="0"
+              textAlign="left"
+              px="5"
+              py="4"
+              borderBottomWidth="1px"
+              borderColor="gray.100"
+              _last={{ borderBottomWidth: '0' }}
+              _hover={{
+                bg: 'gray.50',
+              }}
+              _active={{
+                bg: 'gray.100',
+              }}
+              transition="background 0.15s ease"
+              cursor="pointer"
               onClick={() => onSelect(location)}
             >
-              <Stack align="flex-start" gap="0">
-                <Text fontWeight="600">{location.name}</Text>
+              <Stack gap="1">
+                <Text fontSize="md" fontWeight="600" color="gray.800">
+                  {location.name}
+                </Text>
 
-                <Text fontSize="sm" color="gray.600">
-                  {location.country} — {location.latitude}, {location.longitude}
+                <Text fontSize="sm" color="gray.500">
+                  {location.country}
                 </Text>
               </Stack>
-            </Button>
+            </Box>
           ))}
         </Stack>
       </Box>

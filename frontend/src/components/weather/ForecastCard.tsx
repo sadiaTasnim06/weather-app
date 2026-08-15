@@ -1,24 +1,32 @@
-import { Box, Stack, Text } from "@chakra-ui/react";
-import type { Weather } from "../../types/weather";
-import { getWeatherDescription } from "../../utils/weatherCode";
-import { formatWeekday } from "../../utils/date";
+import { Box, Stack, Text } from '@chakra-ui/react';
+import type { Weather } from '../../types/weather';
+import { getWeatherDescription } from '../../utils/weatherCode';
+import { formatWeekday } from '../../utils/date';
 
 interface ForecastCardProps {
-  day: Weather["daily"][number];
+  day: Weather['daily'][number];
 }
 
 export function ForecastCard({ day }: ForecastCardProps) {
   return (
-    <Box borderWidth="1px" borderRadius="lg" p="4" bg="white">
-      <Stack gap="3" align="center">
-        <Text fontWeight="600">{formatWeekday(day.date)}</Text>
+    <Box
+      borderWidth="1px"
+      borderRadius="lg"
+      p={{ base: '3', md: '4' }}
+      bg="white"
+      minW="0"
+    >
+      <Stack gap="3" align="center" textAlign="center">
+        <Text fontWeight="600" fontSize="sm">
+          {formatWeekday(day.date)}
+        </Text>
 
-        <Text fontSize="sm" color="gray.600">
+        <Text fontSize="xs" color="gray.600" lineHeight="short" minH="32px">
           {getWeatherDescription(day.weatherCode)}
         </Text>
 
-        <Stack direction="row" gap="3" align="baseline">
-          <Text fontSize="xl" fontWeight="bold">
+        <Stack direction="row" gap="2" align="baseline">
+          <Text fontSize="lg" fontWeight="bold">
             {day.maxTemperature}°
           </Text>
 
