@@ -46,3 +46,7 @@ Thumbs.db
 *.sln
 *.sw?
 
+# Terraform
+terraform/.terraform/
+terraform/*.tfstate
+terraform/*.tfstate.*
